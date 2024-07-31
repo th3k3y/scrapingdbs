@@ -16,36 +16,36 @@
     <div id="result"></div>
 
     <script>
-async function searchEmail() {
-    const email = document.getElementById('emailInput').value;
-    const resultDiv = document.getElementById('result');
-    resultDiv.textContent = 'Recherche en cours...';
+        async function searchEmail() {
+            const email = document.getElementById('emailInput').value;
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Recherche en cours...';
 
-    try {
-        const response = await fetch('/search', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email })
-        });
+            try {
+                const response = await fetch('/api/search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data.error) {
+                    resultDiv.textContent = 'Erreur : ' + data.error;
+                } else if (data.result) {
+                    resultDiv.textContent = data.result;
+                } else {
+                    resultDiv.textContent = 'Aucun résultat trouvé.';
+                }
+            } catch (error) {
+                console.error('Erreur lors de la recherche:', error);
+                resultDiv.textContent = 'Une erreur est survenue lors de la recherche. Veuillez réessayer.';
+            }
         }
-
-        const data = await response.json();
-
-        if (data.error) {
-            resultDiv.textContent = 'Erreur : ' + data.error;
-        } else if (data.result) {
-            resultDiv.textContent = data.result;
-        } else {
-            resultDiv.textContent = 'Aucun résultat trouvé.';
-        }
-    } catch (error) {
-        console.error('Erreur lors de la recherche:', error);
-        resultDiv.textContent = 'Une erreur est survenue lors de la recherche. Veuillez réessayer.';
-    }
-}
     </script>
 </body>
 </html>
