@@ -2,15 +2,15 @@
   "name": "email-search-app",
   "version": "1.0.0",
   "description": "Application de recherche d'email",
-  "main": "server.js",
+  "main": "api/search.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "vercel dev"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "puppeteer": "^19.7.2"
+    "chrome-aws-lambda": "^10.1.0",
+    "puppeteer-core": "^10.1.0"
   },
-  "engines": {
-    "node": "16.x"
+  "devDependencies": {
+    "vercel": "^23.1.2"
   }
 }
