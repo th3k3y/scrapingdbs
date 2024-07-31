@@ -1,3 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche Email</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        #result { white-space: pre-wrap; background-color: #f0f0f0; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Recherche Email</h1>
+    <input type="email" id="emailInput" placeholder="Entrez l'adresse email">
+    <button onclick="searchEmail()">Rechercher</button>
+    <div id="result"></div>
+
+    <script>
 async function searchEmail() {
     const email = document.getElementById('emailInput').value;
     const resultDiv = document.getElementById('result');
@@ -28,3 +46,6 @@ async function searchEmail() {
         resultDiv.textContent = 'Une erreur est survenue lors de la recherche. Veuillez réessayer.';
     }
 }
+    </script>
+</body>
+</html>
