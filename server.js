@@ -1,16 +1,3 @@
-const express = require('express');
-const puppeteer = require('puppeteer');
-const path = require('path');
-const app = express();
-const port = process.env.PORT || 3000;
-
-app.use(express.json());
-app.use(express.static('public'));
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
 app.post('/search', async (req, res) => {
     const { email } = req.body;
     
@@ -21,6 +8,11 @@ app.post('/search', async (req, res) => {
         const page = await browser.newPage();
         
         await page.goto('https://niggerbase.xyz');
+        
+        // Vérifiez si la page s'est chargée correctement
+        if (page.url() !== 'https://niggerbase.xyz') {
+            throw new Error("La page n'a pas pu être chargée correctement");
+        }
         
         await page.click('span:contains("Email")');
         await page.type('#query', email);
@@ -38,10 +30,7 @@ app.post('/search', async (req, res) => {
         
         res.json({ result: trimmedContent });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Erreur lors du scraping:', error);
+        res.status(500).json({ error: "Une erreur s'est produite lors de la recherche. Veuillez réessayer." });
     }
-});
-
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
 });
